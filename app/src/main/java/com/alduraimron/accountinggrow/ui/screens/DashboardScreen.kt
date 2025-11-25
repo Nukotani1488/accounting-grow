@@ -134,7 +134,7 @@ fun DashboardScreen(navController: NavHostController) {
                 QuickActionButton(
                     icon = "💰",
                     label = "Tabungan",
-                    onClick = { },
+                    onClick = { navController.navigate("saving") },
                     modifier = Modifier.weight(1f)
                 )
                 QuickActionButton(

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -17,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,15 +28,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.alduraimron.accountinggrow.ui.TabButton
+import com.alduraimron.accountinggrow.ui.viewmodel.SavingViewModel
+import com.alduraimron.accountinggrow.ui.viewmodel.SavingViewModelFactory
 
 @Composable
-fun TransactionScreen(navController: NavHostController) {
+fun SavingEntry(
+    name: String,
+    target: Double,
+    amount: Double
+) {
+    Column {
+        Text(name)
+        Text("Nominal Pengisian")
+        Text("Rp")
+        Text("$target")
+        Text("$amount")
+    }
+}
+@Composable
+fun SavingScreen(navController: NavHostController) {
     val nominal = remember { mutableStateOf("") }
     val category = remember { mutableStateOf("Pilih Kategori") }
     val date = remember { mutableStateOf("") }
     val description = remember { mutableStateOf("") }
+    val savingViewModel: SavingViewModel = viewModel(
+        factory = SavingViewModelFactory("1")
+    )
 
     Box(
         modifier = Modifier
@@ -63,7 +83,7 @@ fun TransactionScreen(navController: NavHostController) {
                     )
                 }
                 Text(
-                    text = "Transaksi",
+                    text = "Tabungan",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
@@ -84,93 +104,16 @@ fun TransactionScreen(navController: NavHostController) {
                     horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
                 ) {
                     TabButton(
-                        text = "Pengeluaran",
+                        text = "Berlangsung",
                         isSelected = true,
                         modifier = Modifier.weight(1f)
                     )
                     TabButton(
-                        text = "Pemasukan",
+                        text = "Tercapai",
                         isSelected = false,
                         modifier = Modifier.weight(1f)
                     )
                 }
-
-                // Form fields
-                Text(
-                    text = "Nominal",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-                OutlinedTextField(
-                    value = nominal.value,
-                    onValueChange = { nominal.value = it },
-                    label = { Text("Rp") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    shape = RoundedCornerShape(8.dp)
-                )
-
-                Text(
-                    text = "Kategori",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color(0xFFF5F5F5), shape = RoundedCornerShape(8.dp))
-                        .clickable { }
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = category.value,
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
-                }
-
-                Text(
-                    text = "Tanggal",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color(0xFFF5F5F5), shape = RoundedCornerShape(8.dp))
-                        .clickable { }
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "Pilihan Tanggalan",
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
-                }
-
-                Text(
-                    text = "Keterangan",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                OutlinedTextField(
-                    value = description.value,
-                    onValueChange = { description.value = it },
-                    label = { Text("Deskripsi") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    minLines = 3
-                )
 
                 Button(
                     onClick = { navController.popBackStack() },

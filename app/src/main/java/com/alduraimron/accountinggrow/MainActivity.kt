@@ -3,16 +3,11 @@ package com.alduraimron.accountinggrow
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -21,6 +16,7 @@ import com.alduraimron.accountinggrow.ui.screens.LoginScreen
 import com.alduraimron.accountinggrow.ui.screens.OnboardingScreen
 import com.alduraimron.accountinggrow.ui.screens.PinScreen
 import com.alduraimron.accountinggrow.ui.screens.ReportScreen
+import com.alduraimron.accountinggrow.ui.screens.SavingScreen
 import com.alduraimron.accountinggrow.ui.screens.SplashScreen
 import com.alduraimron.accountinggrow.ui.screens.TransactionScreen
 import com.alduraimron.accountinggrow.ui.theme.AccountingGrowTheme
@@ -69,6 +65,9 @@ fun AppNavigation() {
         }
         composable("report") {
             ReportScreen(navController)
+        }
+        composable("saving") {
+            SavingScreen(navController)
         }
     }
 }
