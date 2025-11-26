@@ -9,18 +9,41 @@ class SavingViewModel(val userId: String) : ViewModel() {
 
     private val repository = SavingRepository(userId)
 
-    val ongoingSavings = mutableStateOf<List<SavingEntity>>(emptyList())
-    val completedSavings = mutableStateOf<List<SavingEntity>>(emptyList())
+    private val _ongoingSavings = mutableStateOf<List<SavingEntity>>(emptyList())
+    private var ongoingLoaded = false
 
-    fun loadOngoingSavings() {
+    private val _completedSavings = mutableStateOf<List<SavingEntity>>(emptyList())
+    private var completedLoaded = false
+
+    val ongoingSavings
+        get() = {
+            if(ongoingLoaded) {
+                _ongoingSavings
+            } else {
+                loadOngoingSavings()
+                ongoingLoaded = true
+            }
+        }
+
+    val completedSavings
+        get() = {
+            if(completedLoaded) {
+                _completedSavings
+            } else {
+                loadCompletedSavings()
+                completedLoaded = true
+            }
+        }
+
+    private fun loadOngoingSavings() {
         repository.getOngoingSavings { fetched ->
-            ongoingSavings.value = fetched
+            _ongoingSavings.value = fetched
         }
     }
 
-    fun loadCompletedSavings() {
+    private fun loadCompletedSavings() {
         repository.getCompletedSavings { fetched ->
-            completedSavings.value = fetched
+            _completedSavings.value = fetched
         }
     }
 

@@ -50,13 +50,11 @@ fun SavingEntry(
 }
 @Composable
 fun SavingScreen(navController: NavHostController) {
-    val nominal = remember { mutableStateOf("") }
-    val category = remember { mutableStateOf("Pilih Kategori") }
-    val date = remember { mutableStateOf("") }
-    val description = remember { mutableStateOf("") }
     val savingViewModel: SavingViewModel = viewModel(
+        //placeholder
         factory = SavingViewModelFactory("1")
     )
+    val isOngoing = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
