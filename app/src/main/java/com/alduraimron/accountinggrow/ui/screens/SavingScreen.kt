@@ -18,12 +18,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -50,6 +53,7 @@ import com.alduraimron.accountinggrow.ui.viewmodel.SavingViewModel
 import com.alduraimron.accountinggrow.ui.viewmodel.SavingViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.intellij.lang.annotations.JdkConstants
 import java.net.URL
 import java.text.NumberFormat
 import java.util.Locale
@@ -111,8 +115,10 @@ fun SavingEntry(saving: SavingEntity) {
                 .padding(10.dp)
         ) {
             Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Nominal Pengisian"
+                text = "Nominal Pengisian",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
             )
             Row(
                 modifier = Modifier
@@ -141,6 +147,7 @@ fun SavingEntry(saving: SavingEntity) {
                     }
                 }
             }
+            HorizontalDivider()
         }
     }
 }
@@ -203,13 +210,13 @@ fun SavingScreen(navController: NavHostController) {
                         text = "Berlangsung",
                         isSelected = isOngoingTab,
                         modifier = Modifier.weight(1f),
-                        onClick = { isOngoingTab = !isOngoingTab }
+                        onClick = { isOngoingTab = true }
                     )
                     TabButton(
                         text = "Tercapai",
                         isSelected = !isOngoingTab,
                         modifier = Modifier.weight(1f),
-                        onClick = { isOngoingTab = !isOngoingTab }
+                        onClick = { isOngoingTab = false }
                     )
                 }
 
@@ -218,13 +225,15 @@ fun SavingScreen(navController: NavHostController) {
                         .fillMaxWidth()
                         .fillMaxHeight(0.8f),
                     contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     items(savings) { saving ->
                         SavingEntry(saving)
                         Spacer(Modifier.height(16.dp))
                     }
                 }
+
+                HorizontalDivider()
 
                 Button(
                     onClick = { navController.navigate("add_saving") },
