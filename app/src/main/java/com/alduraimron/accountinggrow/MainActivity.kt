@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alduraimron.accountinggrow.ui.screens.AddSavingScreen
 import com.alduraimron.accountinggrow.ui.screens.DashboardScreen
 import com.alduraimron.accountinggrow.ui.screens.LoginScreen
 import com.alduraimron.accountinggrow.ui.screens.OnboardingScreen
@@ -68,6 +69,9 @@ fun AppNavigation() {
         }
         composable("saving") {
             SavingScreen(navController)
+        }
+        composable("add_saving") {
+            AddSavingScreen(navController)
         }
     }
 }
