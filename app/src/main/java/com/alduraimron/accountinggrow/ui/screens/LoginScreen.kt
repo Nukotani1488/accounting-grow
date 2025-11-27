@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.alduraimron.accountinggrow.data.repository.AuthRepository
+import com.alduraimron.accountinggrow.ui.screens.auth.AuthState
 import com.alduraimron.accountinggrow.ui.screens.auth.AuthViewModel
 
 @Composable
@@ -40,6 +42,16 @@ fun LoginScreen(
 ) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
+    val state = authViewModel.authState
+
+    LaunchedEffect(state) {
+        if (state is AuthState.Success) {
+            navController.navigate("pin") {
+                popUpTo("login") { inclusive = true }
+            }
+            authViewModel.resetState() // optional: reset to Idle if you need
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -117,9 +129,10 @@ fun LoginScreen(
 
                     Button(
                         onClick = {
-                            navController.navigate("pin") {
-                                popUpTo("login") { inclusive = true }
-                            }
+                            authViewModel.login(
+                                email = email.value,
+                                password = password.value
+                            )
                         },
                         modifier = Modifier
                             .fillMaxWidth()

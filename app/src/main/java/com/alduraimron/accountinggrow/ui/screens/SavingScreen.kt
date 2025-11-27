@@ -50,7 +50,6 @@ import com.alduraimron.accountinggrow.data.model.SavingEntity
 import com.alduraimron.accountinggrow.data.model.SavingType
 import com.alduraimron.accountinggrow.ui.TabButton
 import com.alduraimron.accountinggrow.ui.viewmodel.SavingViewModel
-import com.alduraimron.accountinggrow.ui.viewmodel.SavingViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.intellij.lang.annotations.JdkConstants
@@ -153,10 +152,7 @@ fun SavingEntry(saving: SavingEntity) {
 }
 @Composable
 fun SavingScreen(navController: NavHostController) {
-    val savingViewModel: SavingViewModel = viewModel(
-        //placeholder
-        factory = SavingViewModelFactory("1")
-    )
+    val savingViewModel: SavingViewModel = viewModel()
     var isOngoingTab by remember { mutableStateOf(true) }
     val savings =   if (isOngoingTab) savingViewModel.ongoingSavings.value
                     else savingViewModel.completedSavings.value

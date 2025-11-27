@@ -3,93 +3,42 @@ package com.alduraimron.accountinggrow.data.repository
 import com.alduraimron.accountinggrow.data.model.SavingEntity
 import com.alduraimron.accountinggrow.data.model.SavingType
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+object FirebaseRepository {
+    private val auth = FirebaseAuth.getInstance()
 
-class FirebaseRepository(
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-) {
-
-    /**
-     * Placeholder function to fetch savings for a user.
-     * Returns a dummy SavingEntity for testing purposes.
-     */
     private fun requireUid(): String {
-        return auth.currentUser?.uid
-            ?: throw IllegalStateException("No logged-in user")
+        return auth.currentUser?.uid ?: throw IllegalStateException("No logged-in user")
     }
-    fun getOngoingSavings(callback: (List<SavingEntity>) -> Unit) {
-        // Create some dummy savings
-        val placeholderSavings = listOf(
-            SavingEntity(
-                id = "1",
-                userId = requireUid(),
-                name = "Civic Turbo",
-                target = 100000000.0,
-                amount = 10000000.0,
-                isCompleted = false,
-                type = SavingType.MONTHLY
-            ),
-            SavingEntity(
-                id = "4",
-                userId = requireUid(),
-                name = "Mobil Civic Turbo",
-                target = 100000000.0,
-                amount = 10000000.0,
-                isCompleted = false,
-                type = SavingType.MONTHLY
-            ),
-            SavingEntity(
-                id = "5",
-                userId = requireUid(),
-                name = "Mobil Civic Turbo",
-                target = 100000000.0,
-                amount = 10000000.0,
-                isCompleted = false,
-                type = SavingType.MONTHLY
-            )
-        )
 
-        // Simulate async behavior like a real Firebase call
-        callback(placeholderSavings.filter { it.userId == requireUid() })
+    fun getOngoingSavings(callback: (List<SavingEntity>) -> Unit) {
+        val uid = requireUid()
+        val placeholder = listOf(
+            SavingEntity("1", uid, "Civic Turbo", 100_000_000.0, 10_000_000.0, SavingType.MONTHLY, false)
+        )
+        callback(placeholder)
     }
 
     fun getCompletedSavings(callback: (List<SavingEntity>) -> Unit) {
-        // Create some dummy savings
-        val placeholderSavings = listOf(
-            SavingEntity(
-                id = "2",
-                userId = requireUid(),
-                name = "idk",
-                target = 100.0,
-                amount = 10.0,
-                isCompleted = true,
-                type = SavingType.WEEKLY
-            )
+        val uid = requireUid()
+        val placeholder = listOf(
+            SavingEntity("2", uid, "idk", 100.0, 10.0, SavingType.WEEKLY, true)
         )
-
-        // Simulate async behavior like a real Firebase call
-        callback(placeholderSavings.filter { it.userId == requireUid() })
+        callback(placeholder)
     }
 
-        /**
-     * Placeholder function to add a new saving.
-     * Does nothing but calls callback with true.
-     */
     fun addSaving(saving: SavingEntity, callback: (Boolean) -> Unit) {
+        val uid = requireUid()
+        val savingWithUser = saving.copy(userId = uid)
         callback(true)
     }
 
-    /**
-     * Placeholder update function.
-     */
     fun updateSaving(saving: SavingEntity, callback: (Boolean) -> Unit) {
+        requireUid()
         callback(true)
     }
 
-    /**
-     * Placeholder delete function.
-     */
     fun deleteSaving(savingId: String, callback: (Boolean) -> Unit) {
+        requireUid()
         callback(true)
     }
 }

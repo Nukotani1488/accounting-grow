@@ -24,9 +24,9 @@ class LazyLoadingState<T>(
 }
 
 
-class SavingViewModel(val userId: String) : ViewModel() {
+class SavingViewModel() : ViewModel() {
 
-    private val repository = FirebaseRepository(userId)
+    private val repository = FirebaseRepository
 
     private val _ongoingSavings = mutableStateOf<List<SavingEntity>>(emptyList())
     private val _completedSavings = mutableStateOf<List<SavingEntity>>(emptyList())
