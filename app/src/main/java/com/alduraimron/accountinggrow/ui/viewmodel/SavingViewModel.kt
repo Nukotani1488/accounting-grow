@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.alduraimron.accountinggrow.data.model.SavingEntity
-import com.alduraimron.accountinggrow.data.repository.SavingRepository
+import com.alduraimron.accountinggrow.data.repository.FirebaseRepository
 
 class LazyLoadingState<T>(
     private val loader: () -> Unit,
@@ -26,7 +26,7 @@ class LazyLoadingState<T>(
 
 class SavingViewModel(val userId: String) : ViewModel() {
 
-    private val repository = SavingRepository(userId)
+    private val repository = FirebaseRepository(userId)
 
     private val _ongoingSavings = mutableStateOf<List<SavingEntity>>(emptyList())
     private val _completedSavings = mutableStateOf<List<SavingEntity>>(emptyList())

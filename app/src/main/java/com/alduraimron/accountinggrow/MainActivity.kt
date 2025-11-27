@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +21,7 @@ import com.alduraimron.accountinggrow.ui.screens.ReportScreen
 import com.alduraimron.accountinggrow.ui.screens.SavingScreen
 import com.alduraimron.accountinggrow.ui.screens.SplashScreen
 import com.alduraimron.accountinggrow.ui.screens.TransactionScreen
+import com.alduraimron.accountinggrow.ui.screens.auth.AuthViewModel
 import com.alduraimron.accountinggrow.ui.theme.AccountingGrowTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,6 +43,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val authViewModel: AuthViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -53,7 +56,9 @@ fun AppNavigation() {
             OnboardingScreen(navController)
         }
         composable("login") {
-            LoginScreen(navController)
+            LoginScreen(
+                navController = navController,
+                authViewModel = authViewModel)
         }
         composable("pin") {
             PinScreen(navController)

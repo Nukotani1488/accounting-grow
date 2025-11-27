@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
 @Composable
-fun DashboardScreen(navController: NavHostController) {
+fun DashboardScreen(
+    navController: NavHostController
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
